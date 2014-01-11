@@ -1,4 +1,3 @@
-
 // define globals
 var events_count;
 var max_events = 6;
@@ -89,8 +88,7 @@ $( function()
         event.preventDefault();
     });
 
-    // header scroll
-    $('#header-scroll').bind('mousewheel', function(event, delta, deltaX, deltaY) {
+    var scrollHeaderProgram = function(event, delta, deltaX, deltaY) {
 
         if (( event.originalEvent.wheelDelta < 0 ) || (deltaY < 0)) {
             header_scroll_down();
@@ -99,7 +97,15 @@ $( function()
             return header_scroll_up();
         }
 
-    });
+    }
+
+    
+    $('#header-scroll').on('mouseenter', function(){
+        $(this).on('mousewheel', scrollHeaderProgram);
+    }).on('mouseleave', function(){
+        $(this).off('mousewheel');
+    })
+    
     // set scrollbar height
     $('#header-scrollbar').css('height', (max_events/events_count)*100+ '%');
 
